@@ -133,14 +133,14 @@ print(resultado)
 class ListaVaciaError(Exception):
     pass
 
-def calcular_promedio(lista):
+def calcular_promedio_lista(lista):
     if len(lista) == 0:
         raise ListaVaciaError("La lista está vacía, no se puede calcular el promedio.")
     return sum(lista) / len(lista)
 
 try:
     numeros = [4, 6, 7]
-    promedio = calcular_promedio(numeros)
+    promedio = calcular_promedio_lista(numeros)
     print("Promedio:", promedio)
 
 except ListaVaciaError as e:
@@ -271,8 +271,6 @@ print(resultado)
 
 # 22. Dada una lista numérica, obtén el producto total de los valores de dicha lista.Usa la función reduce() .
 
-from functools import reduce
-
 def producto_total(lista):
     return reduce(lambda acumulado, x: acumulado * x, lista)
 
@@ -282,10 +280,8 @@ print(resultado)
 
 # 23. Concatena una lista de palabras. Usa la función reduce() .
 
-from functools import reduce
-
 def concatenar_palabras(lista_palabras):
-    return reduce(lambda acumulado, palabra: acumulado + palabra, lista_palabras)
+    return "".join(lista_palabras)
 
 palabras = ["Hola", " ", "probando", " ", "como"," ", "funciona"]
 resultado = concatenar_palabras(palabras)
@@ -320,11 +316,11 @@ print(resultado)
 
 # 27. Crea una función que calcule el promedio de una lista de números.
 
-def calcular_promedio(lista):
+def calcular_promedio_simple(lista):
     return sum(lista) / len(lista)
 
 numeros = [5, 7, 2, 7]
-resultado = calcular_promedio(numeros)
+resultado = calcular_promedio_simple(numeros)
 print(resultado)
 
 # 28. Crea una función que busque y devuelva el primer elemento duplicado en una lista dada.
@@ -441,7 +437,7 @@ class Arbol:
         if posicion >= 0 and posicion < len(self.ramas):
             self.ramas.pop(posicion)
         else:
-            print("No existe esa rama")
+            raise IndexError("No existe esa rama")
 
     def info_arbol(self):
         print("Longitud del tronco:", self.tronco)
@@ -477,20 +473,20 @@ class UsuarioBanco:
 
     def retirar_dinero(self, cantidad):
         if not self.cuenta_corriente:
-            raise Exception("No tiene cuenta corriente")
+            raise ValueError("El usuario no tiene cuenta corriente")
 
         if cantidad > self.saldo:
-            raise Exception("No hay suficiente saldo")
+            raise ValueError("No hay suficiente saldo")
 
         self.saldo = self.saldo - cantidad
         print(self.nombre, "ha retirado", cantidad)
 
     def transferir_dinero(self, otro_usuario, cantidad):
         if not self.cuenta_corriente:
-            raise Exception("No tiene cuenta corriente")
+            raise ValueError("El usuario no tiene cuenta corriente")
 
         if cantidad > self.saldo:
-            raise Exception("No hay suficiente saldo para transferir")
+            raise ValueError("No hay suficiente saldo para transferir")
 
         # Restamos al usuario actual
         self.saldo = self.saldo - cantidad
